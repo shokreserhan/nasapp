@@ -4,21 +4,13 @@ import './styles/Home.css'
 import {MdFavoriteBorder} from 'react-icons/md';
 import axios from 'axios'
 
-function FavoritePost({APOD}) {
+function FavoritePost({APOD , removeFavoriteFromDB}) {
     const SERVER_URL = "http://localhost:3001/";
 
     const getMediaType = () => APOD.media_type
 
-    const removeFavoriteFromDB = () =>{
-        axios.delete(`${SERVER_URL}favorite`, {
-           id:APOD._id
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    const handleRemoveFavoriteFromDB = () =>{
+      removeFavoriteFromDB(APOD._id)
     }
 
     return (
@@ -29,8 +21,8 @@ function FavoritePost({APOD}) {
                 <img className='APOD-pic' src={APOD.URL} alt={APOD.title} /> : getMediaType() == "video" &&
                 <ReactPlayer url={APOD.URL} /> 
                 }
-                <MdFavoriteBorder onClick={removeFavoriteFromDB}/>
             </div>
+                <MdFavoriteBorder onClick={handleRemoveFavoriteFromDB}/>
         </div>
     )
   }

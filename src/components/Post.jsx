@@ -29,7 +29,7 @@ function Post({APOD}) {
             <img className='APOD-pic' src={APOD.links[0].href} alt={APOD.data[0].title} /> : getMediaType() == "video" &&
             <ReactPlayer url={APOD.links[0].href} /> 
             }
-            <MdFavorite onClick={saveFavoriteToDB}/>
+            <div className='saveIcon'><MdFavorite onClick={saveFavoriteToDB}/></div>
         </div>
     )
   }

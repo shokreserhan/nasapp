@@ -9,10 +9,9 @@ function Favourites() {
 
   const [favoriteData, setfavoriteData] = useState([])
 
-  useEffect( () => {
+  const getFavoriteData = () => {
     axios.get(`http://localhost:3001/favorite`)
     .then(function (response) {
-      console.log(response.data);
       setfavoriteData(response.data);
     })
     .catch(function (error) {
@@ -20,16 +19,28 @@ function Favourites() {
     })
     .then(function () {
     });
-},[])
+  }
 
-const removeFavoriteFromDB = () => {
+  useEffect( () => {
+    getFavoriteData()
+},[favoriteData])
 
+const removeFavoriteFromDB = (postId) => {
+  axios.delete(`http://localhost:3001/favorite`,{
+    data: { _id: postId }})
+    .then(function (response) {
+      getFavoriteData()
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+    });
 }
-console.log(favoriteData)
   return (
     <div className="Favourites">
       {favoriteData.map(post => {
-        return (<FavoritePost APOD={post} />)
+        return (<FavoritePost key={post._id} removeFavoriteFromDB={removeFavoriteFromDB} APOD={post} />)
       })}
     </div>
   )

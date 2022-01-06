@@ -12,13 +12,13 @@ router.post("/favorite", async (req, res) => {
   res.send("Added");
 });
 
-router.delete("/transaction", (req, res) => {
+router.delete("/favorite", (req, res) => {
   const { _id } = req.body;
   if (!_id) {
     res.status(400).send("error")
     return null
   }
-  Transaction.findByIdAndDelete({ _id }).exec()
+  postSchema.findByIdAndDelete({ _id }).exec()
   res.send("Deleted");
 });
 
